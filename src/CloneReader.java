@@ -4,16 +4,16 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
+//入力ファイルからクローンセットを抽出するクラス
 public class CloneReader {
 	public List<CloneSet> fileRead(String filePath) {
-		List<CloneSet> cset = new ArrayList<CloneSet>();
+		List<CloneSet> csets = new ArrayList<CloneSet>();
 		FileReader fr = null;
 		BufferedReader br = null;
 		try {
 			fr = new FileReader(filePath);
 			br = new BufferedReader(fr);
-			cset = getCloneSet(br);
+			csets = getCloneSet(br);
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
@@ -26,11 +26,11 @@ public class CloneReader {
 				e.printStackTrace();
 			}
 		}
-		return cset;
+		return csets;
 	}
 
 	public List<CloneSet> getCloneSet(BufferedReader br) throws IOException {
-		List<CloneSet> cset = new ArrayList<CloneSet>();
+		List<CloneSet> csets = new ArrayList<CloneSet>();
 		String line = br.readLine();
 		while (!(line.equals("#begin{clone}"))) {// #begin{clone}の行までたどりつく
 			line = br.readLine();
@@ -38,14 +38,16 @@ public class CloneReader {
 		line = br.readLine();// #begin{set}
 		do {// #begin{set}～#end{set}の中身をひたすら，clonesetに格納していく
 			line = br.readLine();
-			CloneSet clone = new CloneSet();
+			CloneSet cset = new CloneSet();
 			do {
-				clone.clonelist.add(line);
+				Clone clone = new Clone();
+				clone.setLine(line);
+				cset.getCloneList().add(clone);
 				line = br.readLine();
 			} while (!line.equals("#end{set}"));
-			cset.add(clone);
+			csets.add(cset);
 			line = br.readLine();// #begin{set}か#end{clone}のどちらか
 		} while (!(line.equals("#end{clone}")));
-		return cset;
+		return csets;
 	}
 }
