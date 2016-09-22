@@ -29,7 +29,9 @@ public class CloneReader {
 		return csets;
 	}
 
+//ファイルを一行ずつ読んでいき，クローンセットごとにクローン情報を格納していく
 	public List<CloneSet> getCloneSet(BufferedReader br) throws IOException {
+		int setNum=0;
 		List<CloneSet> csets = new ArrayList<CloneSet>();
 		String line = br.readLine();
 		while (!(line.equals("#begin{clone}"))) {// #begin{clone}の行までたどりつく
@@ -39,6 +41,7 @@ public class CloneReader {
 		do {// #begin{set}～#end{set}の中身をひたすら，clonesetに格納していく
 			line = br.readLine();
 			CloneSet cset = new CloneSet();
+			cset.setSetNum(setNum++);
 			do {
 				Clone clone = new Clone();
 				clone.setLine(line);
