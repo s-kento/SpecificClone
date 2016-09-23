@@ -4,9 +4,8 @@ import java.util.List;
 //プロジェクト間クローンセットと，プロジェクト内クローンセットのoverlap値を算出する
 public class CloneClassifier {
 
-	static double THRESHOLD = 0.5;
 
-	public void classifyGroup(List<CloneSet> csets) {
+	public void classifyGroup(List<CloneSet> csets, double threshold) {
 		for (CloneSet cset1 : csets) {
 			if (!cset1.isSingle()) {// プロジェクト間のクローンならば
 				for (Clone clone1 : cset1.getCloneList()) {// 各クローンがcontainしているsingleのクローンセットを走査していく
@@ -14,7 +13,7 @@ public class CloneClassifier {
 						if (cset2.isSingle() && (clone1.getGroupId() == cset2.getGroupId())) {
 							for (Clone clone2 : cset2.getCloneList()) {
 								if ((clone1.getFileId() == clone2.getFileId()) && isContained(clone2, clone1)) {
-									if (calcContained(clone2, clone1) >= THRESHOLD) {
+									if (calcContained(clone2, clone1) >= threshold) {
 										cset2.changeToNotSpec();
 									}
 								}

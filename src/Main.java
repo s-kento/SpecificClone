@@ -8,7 +8,7 @@ public class Main {
 	public static void main(String[] args) throws IOException {
 		clonesets = new CloneReader().fileRead(args[0]);
 		CloneClassifier ccf = new CloneClassifier();
-		ccf.classifyGroup(clonesets);
+		ccf.classifyGroup(clonesets, Double.parseDouble(args[2]));
 		ResultFileController rfc = new ResultFileController();
 		rfc.fileRead(args[0]);
 		rfc.fileWrite(clonesets, args[1]);
