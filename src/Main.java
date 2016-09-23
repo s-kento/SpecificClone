@@ -9,7 +9,7 @@ public class Main {
 		clonesets = new CloneReader().fileRead(args[0]);
 		CloneClassifier ccf = new CloneClassifier();
 		ccf.classifyGroup(clonesets);
-		ResultFileControler rfc = new ResultFileControler();
+		ResultFileController rfc = new ResultFileController();
 		rfc.fileRead(args[0]);
 		rfc.fileWrite(clonesets, args[1]);
 		for (CloneSet cset : clonesets) {
