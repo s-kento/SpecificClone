@@ -46,6 +46,10 @@ public class CloneReader {
 				Clone clone = new Clone();
 				clone.setLine(line);
 				cset.getCloneList().add(clone);
+				cset.checkSingle();
+				if(cset.isSingle()){
+					cset.setGroupId(cset.getCloneList().get(0).getGroupId());
+				}
 				line = br.readLine();
 			} while (!line.equals("#end{set}"));
 			csets.add(cset);

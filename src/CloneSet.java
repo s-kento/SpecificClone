@@ -5,15 +5,28 @@ import java.util.List;
 //クローンをフィールドに持つ
 public class CloneSet {
 	List<Clone> clonelist = new ArrayList<Clone>();
-	List<Integer> groupId = new ArrayList<Integer>();// リストの要素が複数あればプロジェクト間クローンセット．いらない？
-	boolean spec = true;// プロジェクト固有のクローンかどうか
+	int groupId=-1;// プロジェクト内クローンならば，そのプロジェクトIDを格納．
+	boolean single = true;// プロジェクトIDが単一かどうか
+	boolean spec = true; //プロジェクト固有のクローンかどうか
 	int setNum; //上から何番目のクローンセットか．一番上は0番目
 
-	public void changeToNotSpecific() {
-		spec = false;
+	public void changeToNotSingle() {
+		single = false;
 	}
 
-	public boolean getSpec() {
+	public void changeToNotSpec(){
+		spec=false;
+	}
+
+	public int getGroupId(){
+		return groupId;
+	}
+
+	public boolean isSingle() {
+		return single;
+	}
+
+	public boolean isSpec(){
 		return spec;
 	}
 
@@ -25,6 +38,10 @@ public class CloneSet {
 		this.setNum=setNum;
 	}
 
+	public void setGroupId(int groupId){
+		this.groupId=groupId;
+	}
+
 	public List<Clone> getCloneList(){
 		return clonelist;
 	}
@@ -33,18 +50,18 @@ public class CloneSet {
 		return setNum;
 	}
 
-//プロジェクト内クローンならtrue，プロジェクト間クローンならfalseを返す
-	public boolean isSingle(){
+//singleかどうか検査する
+	public void checkSingle(){
 		int groupId=getCloneList().get(0).getGroupId();
 		for(Clone clone:getCloneList()){
 			if(groupId!=clone.getGroupId()){
-				changeToNotSpecific();
+				changeToNotSingle();
+				changeToNotSpec();
 				break;
 			}
 			else{
 				groupId=clone.getGroupId();
 			}
 		}
-		return getSpec();
 	}
 }
