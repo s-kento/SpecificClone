@@ -4,7 +4,7 @@ import java.util.List;
 //プロジェクト間クローンセットと，プロジェクト内クローンセットのoverlap値を算出する
 public class CloneClassifier {
 
-	static double THRESHOLD = 0.7;
+	static double THRESHOLD = 0.5;
 
 	public void classifyGroup(List<CloneSet> csets) {
 		for (CloneSet cset1 : csets) {
@@ -51,7 +51,7 @@ public class CloneClassifier {
 		} else {
 			interEnd = cl1.getEndLine();
 		}
-		contained = (interEnd - interStart + 1) / (cl1.getEndLine() - cl1.getStartLine() + 1);
+		contained = (double)(interEnd - interStart + 1) / (double)(cl1.getEndLine() - cl1.getStartLine() + 1);
 		return contained;
 	}
 }
