@@ -11,7 +11,7 @@ public class Main {
 		ccf.classifyGroup(clonesets, Double.parseDouble(args[2]));
 		ResultFileController rfc = new ResultFileController();
 		rfc.fileRead(args[0]);
-		rfc.fileWrite(clonesets, args[1]);
+		rfc.fileWrite(clonesets, args[1],Integer.parseInt(args[3]));
 		for (CloneSet cset : clonesets) {
 			if (!cset.isSpec()) {
 				System.out.println(cset.getSetNum()+"番目のクローンセット");

@@ -51,12 +51,12 @@ public class ResultFileController {
 		}
 	}
 
-	public void fileWrite(List<CloneSet> csets, String file_name) throws IOException{
+	public void fileWrite(List<CloneSet> csets, String file_name, int targetGoup) throws IOException{
 		File file = new File(file_name);
 		PrintWriter pw = new PrintWriter(new BufferedWriter(new FileWriter(file)));
 		pw.print(head);
 		for(CloneSet cset:csets){
-			if(cset.isSpec()){
+			if(cset.isSpec() && cset.getGroupId()==targetGoup){
 				pw.write(csetsInfo.get(cset.getSetNum()));
 			}
 		}
