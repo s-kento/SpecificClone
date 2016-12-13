@@ -64,4 +64,15 @@ public class CloneSet {
 			}
 		}
 	}
+
+	public boolean containsTarget(int targetId){
+		boolean contain=false;
+		for(Clone clone: getCloneList()){
+			if(clone.getGroupId()==targetId){
+				contain=true;
+				break;
+			}
+		}
+		return contain;
+	}
 }

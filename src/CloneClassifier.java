@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.List;
 
 //プロジェクト間クローンを漏れなく洗い出すクラス
@@ -52,5 +53,34 @@ public class CloneClassifier {
 		}
 		contained = (double)(interEnd - interStart + 1) / (double)(cl1.getEndLine() - cl1.getStartLine() + 1);
 		return contained;
+	}
+
+	//多様度を計算する
+	public double calcDiversity(CloneSet cset){
+		double dv=0;
+		int total=0;
+		int current=0;
+		int tmp=0;
+		int currentId=cset.getCloneList().get(0).getGroupId();
+		List<Integer> occurence=new ArrayList<Integer>();
+		occurence.add(tmp);
+		for(Clone clone: cset.getCloneList()){//グループIDごとの出現回数をoccurenceに格納
+			if(clone.getGroupId()==currentId){
+				tmp++;
+				total++;
+				occurence.set(current, tmp);
+			}
+			else{
+				tmp=1;
+				total++;
+				current++;
+				occurence.add(tmp);
+				currentId=clone.getGroupId();
+			}
+		}
+		for(int i=0;i<occurence.size();i++){
+			dv+=Math.pow((double)occurence.get(i)/(double)total,2);
+		}
+		return 1-dv;
 	}
 }

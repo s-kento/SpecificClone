@@ -6,8 +6,10 @@ public class Main {
 	static List<CloneSet> clonesets = new ArrayList<CloneSet>();
 
 	public static void main(String[] args) throws IOException {
-		clonesets = new CloneReader().fileRead(args[0]);
+		clonesets = new CloneReader().fileRead(args[0],Integer.parseInt(args[3]));
 		CloneClassifier ccf = new CloneClassifier();
+		/*for(CloneSet cset:clonesets)
+			System.out.println(ccf.calcDiversity(cset));*/
 		ccf.classifyGroup(clonesets, Double.parseDouble(args[2]));
 		ResultFileController rfc = new ResultFileController();
 		rfc.fileRead(args[0]);
