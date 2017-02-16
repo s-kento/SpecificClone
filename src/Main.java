@@ -6,7 +6,7 @@ public class Main {
 	static List<CloneSet> clonesets = new ArrayList<CloneSet>();
 
 	public static void main(String[] args) throws IOException {
-		clonesets = new CloneReader().fileRead(args[0],Integer.parseInt(args[3]));
+		clonesets = new CloneReader().fileRead(args[0],Integer.parseInt(args[3]),Double.parseDouble(args[4]));
 		CloneClassifier ccf = new CloneClassifier();
 		/*for(CloneSet cset:clonesets)
 			System.out.println(ccf.calcDiversity(cset));*/

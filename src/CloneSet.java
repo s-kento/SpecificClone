@@ -51,21 +51,15 @@ public class CloneSet {
 	}
 
 //singleかどうか検査する
-	public void checkSingle(int targetId){
-		int groupId=getCloneList().get(0).getGroupId();
+	public void checkSingle(double diversity){
 		CloneClassifier ccf = new CloneClassifier();
-		if(ccf.calcDiversity(this)<0.6){//多様度が閾値よりも低い，固有である
+		if(ccf.calcDiversity(this)<diversity){//多様度が閾値よりも低い，固有である
 			return;
 		}
-		for(Clone clone:getCloneList()){
-			if(groupId!=clone.getGroupId()){
-				changeToNotSingle();
-				changeToNotSpec();
-				break;
-			}
-			else{
-				groupId=clone.getGroupId();
-			}
+		else{
+			changeToNotSingle();
+			changeToNotSpec();
+			return;
 		}
 	}
 

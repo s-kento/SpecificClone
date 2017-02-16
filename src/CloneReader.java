@@ -7,14 +7,14 @@ import java.util.List;
 
 //入力ファイルからクローンセットを抽出するクラス
 public class CloneReader {
-	public List<CloneSet> fileRead(String filePath, int targetId) {
+	public List<CloneSet> fileRead(String filePath, int targetId, double diversity) {
 		List<CloneSet> csets = new ArrayList<CloneSet>();
 		FileReader fr = null;
 		BufferedReader br = null;
 		try {
 			fr = new FileReader(filePath);
 			br = new BufferedReader(fr);
-			csets = getCloneSet(br, targetId);
+			csets = getCloneSet(br, targetId, diversity);
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
@@ -31,7 +31,7 @@ public class CloneReader {
 	}
 
 	// ファイルを一行ずつ読んでいき，クローンセットごとにクローン情報を格納していく
-	public List<CloneSet> getCloneSet(BufferedReader br, int targetId) throws IOException {
+	public List<CloneSet> getCloneSet(BufferedReader br, int targetId, double diversity) throws IOException {
 		int setNum = 0;
 		List<CloneSet> csets = new ArrayList<CloneSet>();
 		String line = br.readLine();
@@ -47,14 +47,16 @@ public class CloneReader {
 				Clone clone = new Clone();
 				clone.setLine(line);
 				cset.getCloneList().add(clone);
-				cset.checkSingle(targetId);
-				if (cset.isSingle()) {
-					cset.setGroupId(targetId);
-				}
 				line = br.readLine();
 			} while (!line.equals("#end{set}"));
-			if (cset.containsTarget(targetId)){ //ターゲットのグループを含むクローンセットならば
-				csets.add(cset);
+			if (cset.containsTarget(targetId)) { // ターゲットのグループを含むクローンセットならば
+				cset.checkSingle(diversity);
+				if (cset.isSingle()) {
+					cset.setGroupId(targetId);
+					csets.add(cset);
+				} else {
+					csets.add(cset);
+				}
 			}
 			line = br.readLine();// #begin{set}か#end{clone}のどちらか
 		} while (!(line.equals("#end{clone}")));
